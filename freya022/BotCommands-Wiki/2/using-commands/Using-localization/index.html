@@ -594,6 +594,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#what-are-localization-templates" class="md-nav__link">
+    What are localization templates ?
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -634,8 +641,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#localization-responses" class="md-nav__link">
-    Localization responses
+  <a href="#localizing-responses" class="md-nav__link">
+    Localizing responses
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-project" class="md-nav__link">
+    Example project
   </a>
   
 </li>
@@ -935,7 +949,7 @@
 <h2 id="localization-files">Localization files<a class="headerlink" href="#localization-files" title="Permanent link">&para;</a></h2>
 <p>Localization can be stored in the JSON format and can contain your command translations, as well as command responses, or any other string.</p>
 <h3 id="where-do-i-store-them">Where do I store them ?<a class="headerlink" href="#where-do-i-store-them" title="Permanent link">&para;</a></h3>
-<p>Localization files need to be stored in the <code>bc_localization</code> folder, in your <code>resources</code> directory, 
+<p>Localization files must be stored in the <code>bc_localization</code> folder, in your <code>resources</code> directory, 
 these files can be of any <em>base</em> name, but must end with the locale's string, and must have a <code>.json</code> extension.</p>
 <p>Examples:</p>
 <ul>
@@ -945,7 +959,7 @@ these files can be of any <em>base</em> name, but must end with the locale's str
 </ul>
 <h3 id="what-do-they-look-like">What do they look like ?<a class="headerlink" href="#what-do-they-look-like" title="Permanent link">&para;</a></h3>
 <p>The JSON file is going to be an object, with each key being the "localization key" and the value being the "localization template".</p>
-<p>The localization key is a string with keywords separated by a dot, the framework takes advantage of JSON as you can nest objects with their translations inside, the path to the nested translation will be your localization key, 
+<p>The localization key is a string where keywords are separated by a dot, the framework takes advantage of JSON as you can nest objects with their translations inside, the path to the nested translation will be your localization key, 
 but they can look exactly like the keys in Java's <code>ResourceBundle</code>, where no nesting is required.</p>
 <details class="note">
 <summary>Example without nesting</summary>
@@ -965,27 +979,45 @@ but they can look exactly like the keys in Java's <code>ResourceBundle</code>, w
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
+<h3 id="what-are-localization-templates">What are localization templates ?<a class="headerlink" href="#what-are-localization-templates" title="Permanent link">&para;</a></h3>
+<p>Localization templates are going to determine how your localized strings will include runtime values. </p>
+<p>The default localization templates works the same as <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/MessageFormat.html">Java's MessageFormat</a>, except it accepts named arguments instead of indexes.
+In a nutshell, you can either have basic templates such as <code>This message will delete in {delete_time} seconds</code>, or have complex templates which will accept the argument name, the format type and the format style.</p>
+<details class="note">
+<summary>Example - <code>/ban</code> success message</summary>
+<div class="highlight"><span class="filename">/resources/bc_localization/MyCommandsLocalization.json</span><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;ban.success&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{banned_user} was banned successfully for the reason &#39;{reason}&#39;, and {del_hours} {del_hours, choice, 1#hour|2&lt;hours} of messages were deleted&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p><strong>Don't forget</strong> <code class="highlight"><span class="nd">@LocalizationBundle</span><span class="p">(</span><span class="s">&quot;MyCommandsLocalization&quot;</span><span class="p">)</span><span class="w"></span></code> <strong>to use your localization bundle</strong> !</p>
+<div class="highlight"><span class="filename">Ban.java</span><pre><span></span><code><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="na">localize</span><span class="p">(</span><span class="s">&quot;ban.success&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">entry</span><span class="p">(</span><span class="s">&quot;banned_user&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">targetUser</span><span class="p">.</span><span class="na">getAsMention</span><span class="p">()),</span><span class="w"></span>
+<span class="w">    </span><span class="n">entry</span><span class="p">(</span><span class="s">&quot;del_hours&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">delHours</span><span class="p">),</span><span class="w"> </span><span class="c1">// (1)</span><span class="w"></span>
+<span class="w">    </span><span class="n">entry</span><span class="p">(</span><span class="s">&quot;reason&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p">)</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+
+<span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">response</span><span class="p">).</span><span class="na">queue</span><span class="p">();</span><span class="w"></span>
+</code></pre></div>
+<ol>
+<li>The hours of messages being deleted can use different wording depending on plurality, 
+    this is reflected on the localization templates with a <code>choice</code> format type, and a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/ChoiceFormat.html">choice format</a></li>
+</ol>
+</details>
 <h2 id="localizing-default-messages">Localizing default messages<a class="headerlink" href="#localizing-default-messages" title="Permanent link">&para;</a></h2>
 <p>Default messages are messages that can be sent by the framework itself, they can come from the command listeners, components or modals for example. </p>
 <h3 id="replacing-default-messages">Replacing default messages<a class="headerlink" href="#replacing-default-messages" title="Permanent link">&para;</a></h3>
 <p>Default messages are defined in <code>/resources/bc_localization/DefaultMessages.json</code>, this is where you can find all the localization keys used by the framework.</p>
 <p>To override one or more default messages, create your own <code>DefaultMessages.json</code>, like you would with a normal localization file.</p>
-<div class="admonition note">
-<p class="admonition-title">Replacing default messages</p>
 <div class="highlight"><span class="filename">/resources/bc_localization/DefaultMessages.json</span><pre><span></span><code><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;general_error_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The bot has encountered an error, try again later.&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-</div>
 <h3 id="adding-translations-to-default-messages">Adding translations to default messages<a class="headerlink" href="#adding-translations-to-default-messages" title="Permanent link">&para;</a></h3>
 <p>Default messages can also be localized, but they must keep the same base name, i.e. <code>DefaultMessages</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Adding translations to default messages</p>
 <div class="highlight"><span class="filename">/resources/bc_localization/DefaultMessages_fr.json</span><pre><span></span><code><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;general_error_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Le bot a rencontré une erreur, veuillez réessayer plus tard.&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w">   </span>
 </code></pre></div>
-</div>
 <h2 id="localizing-application-commands">Localizing application commands<a class="headerlink" href="#localizing-application-commands" title="Permanent link">&para;</a></h2>
 <p>Only application commands supports localization, translations can include names and description of commands as well as options, and also choice names.</p>
 <p>You will need to indicate to the framework which localization files are available, and which languages they support. This can be done with <code>ApplicationCommandsBuilder#addLocalizations</code>, such as:</p>
@@ -1003,8 +1035,25 @@ but they can look exactly like the keys in Java's <code>ResourceBundle</code>, w
 <p>You can then create your commands as you would normally, no need to set up special names or anything.</p>
 <p>Your localization keys will be the same as specified by JDA's <code>LocalizationFunction</code>, 
 which means the keys are composed of the complete path, combined with the option's name and the choice's name as well, please refer to the <a href="https://ci.dv8tion.net/job/JDA5/javadoc/net/dv8tion/jda/api/interactions/commands/localization/LocalizationFunction.html">JDA documentation</a> for more details.</p>
-<h2 id="localization-responses">Localization responses<a class="headerlink" href="#localization-responses" title="Permanent link">&para;</a></h2>
-<p>TODO</p>
+<h2 id="localizing-responses">Localizing responses<a class="headerlink" href="#localizing-responses" title="Permanent link">&para;</a></h2>
+<p>Localizing responses can be done using the framework's events, with the <code>localize</code> methods and its overloads. The method uses the best locale available, depending on the context:</p>
+<ul>
+<li>Any type of <a href="https://ci.dv8tion.net/job/JDA5/javadoc/net/dv8tion/jda/api/interactions/Interaction.html">Interaction</a>: Uses the user's locale</li>
+<li>Other events: Uses the <a href="https://ci.dv8tion.net/job/JDA5/javadoc/net/dv8tion/jda/api/entities/Guild.html#getLocale()">Guild's locale</a> (US English by default)</li>
+</ul>
+<p>Let's say someone used a ban command, but the caller cannot ban the user, due to hierarchy reasons:</p>
+<div class="highlight"><span class="filename">SlashBan.java</span><pre><span></span><code><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="na">localize</span><span class="p">(</span><span class="w"> </span><span class="c1">// (1)</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;ban.caller.interact_error&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">entry</span><span class="p">(</span><span class="s">&quot;mention&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">targetMember</span><span class="p">.</span><span class="na">getAsMention</span><span class="p">())</span><span class="w">  </span><span class="c1">// (2)</span><span class="w"></span>
+<span class="p">);</span><span class="w"> </span>
+<span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">).</span><span class="na">queue</span><span class="p">();</span><span class="w"></span>
+</code></pre></div>
+<ol>
+<li>This will use the user's locale, as a slash command is an interaction.</li>
+<li>"mention" is a variable of the string template</li>
+</ol>
+<h2 id="example-project">Example project<a class="headerlink" href="#example-project" title="Permanent link">&para;</a></h2>
+<p>You can also see this very small bot using localization: <a href="https://github.com/freya022/BotCommands/tree/master/examples/src/main/java/com/freya02/bot/wiki/localization">Link</a></p>
 
               
             </article>
