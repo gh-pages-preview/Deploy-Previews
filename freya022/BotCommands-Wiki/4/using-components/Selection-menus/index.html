@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.3.9">
     
     
       
@@ -927,15 +927,16 @@ and have their first parameter be a <code>StringSelectionEvent</code>, or a <cod
 <span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">AUTO_ROLE_SELECT_MENU_LISTENER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SlashRoleplay: autoRoleSelectMenu&quot;</span><span class="w"></span>
 
 <span class="nd">@JDASelectionMenuListener</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ROLEPLAY_LABEL_SELECT_MENU_LISTENER</span><span class="p">)</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onRoleplayLabelSelectMenu</span><span class="p">(</span><span class="n">StringSelectionEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span>
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onRoleplayLabelSelected</span><span class="p">(</span><span class="n">StringSelectionEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span>
 <span class="w">                                      </span><span class="nd">@AppOption</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">randomNumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Number we got back from when we created the selection menu</span><span class="w"></span>
 <span class="w">    </span><span class="n">event</span><span class="p">.</span><span class="na">replyFormat</span><span class="p">(</span><span class="s">&quot;My random number is %d and your labels have been set to: %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">randomNumber</span><span class="p">,</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="na">getValues</span><span class="p">())</span><span class="w"></span>
 <span class="w">        </span><span class="p">.</span><span class="na">setEphemeral</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="p">.</span><span class="na">queue</span><span class="p">();</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
+<span class="c1">//If you were to create an entity select menu</span><span class="w"></span>
 <span class="nd">@JDASelectionMenuListener</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AUTO_ROLE_SELECT_MENU_LISTENER</span><span class="p">)</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onRoleplayLabelSelectMenu</span><span class="p">(</span><span class="n">EntitySelectionEvent</span><span class="w"> </span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onAutoRoleSelected</span><span class="p">(</span><span class="n">EntitySelectionEvent</span><span class="w"> </span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">rolesString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="na">getValues</span><span class="p">().</span><span class="na">stream</span><span class="p">()</span><span class="w"></span>
 <span class="w">        </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">IMentionable</span><span class="p">::</span><span class="n">getAsMention</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">joining</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">));</span><span class="w"></span>
