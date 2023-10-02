@@ -537,9 +537,21 @@
 <li><a href="https://mvnrepository.com/artifact/ch.qos.logback/logback-classic/latest">logback-classic</a></li>
 </ul>
 <p>You can then create a <code>logback.xml</code> file, which you can put in the root of your resources (<code>src/main/resources</code>),
-or in another place (such as in a config directory), as shown in the bot template (<a href="https://github.com/freya022/BotCommands/blob/1269ca668d702d3d23eef3734eaf9c61da7de3c7/BotTemplate/BotTemplate-Java/src/main/java/io/github/freya022/bot/Main.java#L15">Java</a> / <a href="https://github.com/freya022/BotCommands/blob/1269ca668d702d3d23eef3734eaf9c61da7de3c7/BotTemplate/BotTemplate-Kotlin/src/main/kotlin/io/github/freya022/bot/Main.kt#L29">Kotlin</a>)</p>
-<p>Here are the logback configs used in the <a href="https://github.com/freya022/BotCommands/tree/3.X/BotTemplate">bot template</a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Dev config</label><label for="__tabbed_1_2">Prod config</label></div>
+or in another place (such as in a config directory), and load them as such:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Kotlin</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">ClassicConstants</span><span class="p">.</span><span class="na">CONFIG_FILE_PROPERTY</span><span class="p">,</span><span class="w"> </span><span class="n">PATH_TO_LOGBACK</span><span class="p">.</span><span class="na">toAbsolutePath</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">ClassicConstants</span><span class="p">.</span><span class="na">CONFIG_FILE_PROPERTY</span><span class="p">,</span><span class="w"> </span><span class="n">PATH_TO_LOGBACK</span><span class="p">.</span><span class="na">absolutePathString</span><span class="p">())</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Here are the logback configs used in the bot templates:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Dev config</label><label for="__tabbed_2_2">Prod config</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><span class="filename">logback-test.xml</span><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>

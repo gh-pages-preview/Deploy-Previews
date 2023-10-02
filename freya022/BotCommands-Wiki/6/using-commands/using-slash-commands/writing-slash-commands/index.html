@@ -522,6 +522,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#defining-the-command-method" class="md-nav__link">
+    Defining the command method
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#annotated-commands" class="md-nav__link">
     Annotated commands
   </a>
@@ -542,9 +549,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dsl-commands" class="md-nav__link">
-    DSL commands
+  <a href="#dsl-commands-kotlin" class="md-nav__link">
+    DSL commands (Kotlin)
   </a>
+  
+    <nav class="md-nav" aria-label="DSL commands (Kotlin)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-options_1" class="md-nav__link">
+    Adding options
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -653,16 +673,20 @@
 <h1 id="writing-slash-commands">Writing slash commands<a class="headerlink" href="#writing-slash-commands" title="Permanent link">&para;</a></h1>
 <p>Slash commands are the new way of defining commands, even though there are limitations with them, 
 we do have some advantages such as being easier to fill in, choices and auto-completion.</p>
+<h2 id="defining-the-command-method">Defining the command method<a class="headerlink" href="#defining-the-command-method" title="Permanent link">&para;</a></h2>
+<p>Whether you're using annotated or DSL commands, you will have to write a method, 
+which holds the user inputs as parameters.</p>
+<p>The method must be public, non-static, with the first parameter being <code>GlobalSlashEvent</code> for global commands
+or <code>GuildSlashEvent</code> for guild commands, or guild-only global commands (default).</p>
+<p>Lastly, any class containing commands will need to be annotated with <code class="highlight"><span class="nd">@Command</span></code>.</p>
 <h2 id="annotated-commands">Annotated commands<a class="headerlink" href="#annotated-commands" title="Permanent link">&para;</a></h2>
 <p>Annotated commands are easy to create, but generally are hard to read, cannot be made dynamically,
 and require usage of other methods for other features, such as retrieving choices.</p>
-<p>A slash command can be defined in a class that extends <code>ApplicationCommand</code> and is annotated with <code class="highlight"><span class="nd">@Command</span></code>,
-on a public, non-static method with <code class="highlight"><span class="nd">@JDASlashCommand</span></code>.</p>
-<p>You can set the scope, name, description and other options, 
-but the first parameter of your method must either be <code>GlobalSlashEvent</code> for global commands 
-or <code>GuildSlashEvent</code> for guild commands, or guild-only global commands (default).</p>
+<p>The command method must be annotated with <code class="highlight"><span class="nd">@JDASlashCommand</span></code>,
+where you can set the scope, name, description, etc..., 
+while the declaring class must extend <code>ApplicationCommand</code>.</p>
 <p>Example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Kotlin</label><label for="__tabbed_1_3">Kotlin (DSL)</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Kotlin</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
@@ -693,7 +717,24 @@ or <code>GuildSlashEvent</code> for guild commands, or guild-only global command
 <span class="p">}</span>
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+</div>
+</div>
+<h3 id="adding-options">Adding options<a class="headerlink" href="#adding-options" title="Permanent link">&para;</a></h3>
+<h2 id="dsl-commands-kotlin">DSL commands (Kotlin)<a class="headerlink" href="#dsl-commands-kotlin" title="Permanent link">&para;</a></h2>
+<p>DSL commands were added in V3 to help create commands dynamically, 
+whether it's to let the user filter commands themselves, or adding subcommands/options in a loop; 
+you can almost do anything you want while keeping the simplicity of your command method.</p>
+<p>Application commands can be added with a public, non-static method annotated with <code class="highlight"><span class="nd">@AppDeclaration</span></code>,
+where the first parameter is a <code>GlobalApplicationCommandManager</code> (for global / guild-only global) commands, 
+or <code>GuildApplicationCommandManager</code> for guild commands.</p>
+<p>You can then simply use the <code>slashCommand</code> method, give it the command name, the command method, 
+and then configure your command.</p>
+<p>Example:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Kotlin (DSL)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
 <span class="kd">class</span><span class="w"> </span><span class="nc">SlashPingKotlinDsl</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashPing</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -712,11 +753,7 @@ or <code>GuildSlashEvent</code> for guild commands, or guild-only global command
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="adding-options">Adding options<a class="headerlink" href="#adding-options" title="Permanent link">&para;</a></h3>
-<h2 id="dsl-commands">DSL commands<a class="headerlink" href="#dsl-commands" title="Permanent link">&para;</a></h2>
+<h3 id="adding-options_1">Adding options<a class="headerlink" href="#adding-options_1" title="Permanent link">&para;</a></h3>
 <h2 id="default-description">Default description<a class="headerlink" href="#default-description" title="Permanent link">&para;</a></h2>
 <h2 id="adding-option-resolvers">Adding option resolvers<a class="headerlink" href="#adding-option-resolvers" title="Permanent link">&para;</a></h2>
 <h2 id="predefined-choices">Predefined choices<a class="headerlink" href="#predefined-choices" title="Permanent link">&para;</a></h2>
