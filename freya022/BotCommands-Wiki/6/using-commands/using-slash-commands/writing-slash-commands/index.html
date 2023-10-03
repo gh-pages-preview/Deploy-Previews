@@ -1133,6 +1133,19 @@ by putting them in a localization file, using the root locale (i.e., no locale s
 and have your localization bundle registered with <code>BApplicationConfigBuilder#addLocalizations</code>.</p>
 <details class="info">
 <summary>The same commands as before, but without the descriptions</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Kotlin</label><label for="__tabbed_6_2">Kotlin (DSL)</label><label for="__tabbed_6_3">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashSayDefaultDescriptionKotlin</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;say_default_description&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashSayDefaultDescription</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="nd">@SlashOption</span><span class="w"> </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">content</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
 <span class="kd">class</span><span class="w"> </span><span class="nc">SlashSayDefaultDescriptionKotlinDsl</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashSayDefaultDescription</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1147,6 +1160,19 @@ and have your localization bundle registered with <code>BApplicationConfigBuilde
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SlashSayDefaultDescriptionJava</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;say_default_description&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onSlashSayDefaultDescription</span><span class="p">(</span><span class="n">GuildSlashEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="nd">@SlashOption</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">content</span><span class="p">).</span><span class="na">queue</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 </details>
 <div class="admonition example">
 <p class="admonition-title">Adding the root localization bundle</p>
@@ -1170,7 +1196,7 @@ that is, the resolver will return the choices used for every option of their typ
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <p>Here, the resolver for <code>TimeUnit</code> is already defined and will be explained in <a href="#adding-option-resolvers">Adding option resolvers</a>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Kotlin</label><label for="__tabbed_6_2">Kotlin (DSL)</label><label for="__tabbed_6_3">Java</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:3"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Kotlin</label><label for="__tabbed_7_2">Kotlin (DSL)</label><label for="__tabbed_7_3">Java</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
@@ -1254,7 +1280,7 @@ and implementing <code>SlashParameterResolver</code>.</p>
 <p>The first type parameter is the type of your resolver implementation, and the second type is what the resolver returns.</p>
 <div class="admonition example">
 <p class="admonition-title">A <code>TimeUnit</code> resolver</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Kotlin</label><label for="__tabbed_7_2">Java</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Kotlin</label><label for="__tabbed_8_2">Java</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@Resolver</span>
@@ -1329,7 +1355,7 @@ all you need to do is declare a service factory with <code class="highlight"><sp
 </div>
 <div class="admonition example">
 <p class="admonition-title">How to easily make a resolver for an enum type</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Kotlin</label><label for="__tabbed_8_2">Java</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Kotlin</label><label for="__tabbed_9_2">Java</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code><span class="kd">object</span><span class="w"> </span><span class="nc">TimeUnitResolverSimplified</span><span class="w"> </span><span class="p">{</span>
