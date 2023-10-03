@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../assets/logo-round.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.d451bc0e.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
@@ -541,6 +541,26 @@
     Adding options
   </a>
   
+    <nav class="md-nav" aria-label="Adding options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-choices" class="md-nav__link">
+    Using choices
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generated-values" class="md-nav__link">
+    Generated values
+  </a>
+  
 </li>
         
       </ul>
@@ -561,6 +581,26 @@
     Adding options
   </a>
   
+    <nav class="md-nav" aria-label="Adding options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-choices_1" class="md-nav__link">
+    Using choices
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generated-values_1" class="md-nav__link">
+    Generated values
+  </a>
+  
 </li>
         
       </ul>
@@ -576,16 +616,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-option-resolvers" class="md-nav__link">
-    Adding option resolvers
+  <a href="#using-predefined-choices" class="md-nav__link">
+    Using predefined choices
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#predefined-choices" class="md-nav__link">
-    Predefined choices
+  <a href="#adding-option-resolvers" class="md-nav__link">
+    Adding option resolvers
   </a>
+  
+    <nav class="md-nav" aria-label="Adding option resolvers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    Implementation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-resolver-generators" class="md-nav__link">
+    Built-in resolver generators
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -679,14 +739,38 @@ which holds the user inputs as parameters.</p>
 <p>The method must be public, non-static, with the first parameter being <code>GlobalSlashEvent</code> for global commands
 or <code>GuildSlashEvent</code> for guild commands, or guild-only global commands (default).</p>
 <p>Lastly, any class containing commands will need to be annotated with <code class="highlight"><span class="nd">@Command</span></code>.</p>
+<p>The command methods support coroutines, as well as nullable options, and optionals.</p>
+<details class="example">
+<summary>A method with everything mentioned above</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Kotlin</label><label for="__tabbed_1_2">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">example</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="n">User?,</span><span class="w"> </span><span class="n">integer</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">42</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w">    </span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">example</span><span class="p">(</span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</details>
 <h2 id="annotated-commands">Annotated commands<a class="headerlink" href="#annotated-commands" title="Permanent link">&para;</a></h2>
 <p>Annotated commands are easy to create, but generally are hard to read, cannot be made dynamically,
 and require usage of other methods for other features, such as retrieving choices.</p>
 <p>The command method must be annotated with <code class="highlight"><span class="nd">@JDASlashCommand</span></code>,
 where you can set the scope, name, description, etc..., 
 while the declaring class must extend <code>ApplicationCommand</code>.</p>
-<p>Example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Kotlin</label></div>
+<div class="admonition question">
+<p class="admonition-title">Why do I need to extend <code>ApplicationCommand</code>?</p>
+<p>As a limitation of annotated commands, 
+you are required to extend this class as it allows the framework to ask your commands for stuff,
+like what guilds a command should be pushed to, getting a value generator for one of their options,
+and also getting choices.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Java</label><label for="__tabbed_2_2">Kotlin</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
@@ -719,22 +803,208 @@ while the declaring class must extend <code>ApplicationCommand</code>.</p>
 </div>
 </div>
 </div>
+</div>
 <h3 id="adding-options">Adding options<a class="headerlink" href="#adding-options" title="Permanent link">&para;</a></h3>
+<p>Options can simply be added with a parameter annotated with <code class="highlight"><span class="nd">@SlashOption</span></code>.</p>
+<p>All supported types are documented under <code>ParameterResolver</code>, and <a href="#adding-option-resolvers">other types can be added</a>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Java</label><label for="__tabbed_3_2">Kotlin</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SlashSayJava</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;say&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Says something&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onSlashSay</span><span class="p">(</span><span class="n">GuildSlashEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;What to say&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">content</span><span class="p">).</span><span class="na">queue</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashSayKotlin</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;say&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Says something&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashSay</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;What to say&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">content</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Inferred option names</p>
+<p>Display names of options can be set on the annotation,
+but can also be deduced from the parameter name, this is natively supported in Kotlin,
+but for Java, you will need to <a href="../../Inferred-option-names/">enable parameter names</a> on the Java compiler.</p>
+</div>
+<h4 id="using-choices">Using choices<a class="headerlink" href="#using-choices" title="Permanent link">&para;</a></h4>
+<p>You must override <code>getOptionChoices</code> in order to return a list of choices, 
+be careful to check against the command path as well as the option's display name.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Kotlin</label><label for="__tabbed_4_2">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashConvertKotlin</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getOptionChoices</span><span class="p">(</span><span class="n">guild</span><span class="p">:</span><span class="w"> </span><span class="n">Guild?,</span><span class="w"> </span><span class="n">commandPath</span><span class="p">:</span><span class="w"> </span><span class="n">CommandPath</span><span class="p">,</span><span class="w"> </span><span class="n">optionName</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Choice</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">commandPath</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;convert&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">optionName</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;from&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">optionName</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;to&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="w">                    </span><span class="c1">// The Resolvers class helps us by providing resolvers for any enum type.</span>
+<span class="w">                    </span><span class="c1">// We&#39;re just using the helper method to change an enum value to a more natural name.</span>
+<span class="w">                    </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Choice</span><span class="p">(</span><span class="n">Resolvers</span><span class="p">.</span><span class="na">toHumanName</span><span class="p">(</span><span class="nb">it</span><span class="p">),</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">name</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">super</span><span class="p">.</span><span class="na">getOptionChoices</span><span class="p">(</span><span class="n">guild</span><span class="p">,</span><span class="w"> </span><span class="n">commandPath</span><span class="p">,</span><span class="w"> </span><span class="n">optionName</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;convert&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Convert time to another unit&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashConvert</span><span class="p">(</span>
+<span class="w">        </span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The time to convert&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">time</span><span class="p">:</span><span class="w"> </span><span class="kt">Long</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert from&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert to&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">convert</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">)</span><span class="si">}</span><span class="s"> </span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">name</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SlashConvertJava</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@NotNull</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Choice</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getOptionChoices</span><span class="p">(</span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">Guild</span><span class="w"> </span><span class="n">guild</span><span class="p">,</span><span class="w"> </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">CommandPath</span><span class="w"> </span><span class="n">commandPath</span><span class="p">,</span><span class="w"> </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">optionName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">commandPath</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;convert&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">optionName</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;from&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">optionName</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;to&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="w">                        </span><span class="c1">// The Resolvers class helps us by providing resolvers for any enum type.</span>
+<span class="w">                        </span><span class="c1">// We&#39;re just using the helper method to change an enum value to a more natural name.</span>
+<span class="w">                        </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Choice</span><span class="p">(</span><span class="n">Resolvers</span><span class="p">.</span><span class="na">toHumanName</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="na">name</span><span class="p">()))</span>
+<span class="w">                        </span><span class="p">.</span><span class="na">toList</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">getOptionChoices</span><span class="p">(</span><span class="n">guild</span><span class="p">,</span><span class="w"> </span><span class="n">commandPath</span><span class="p">,</span><span class="w"> </span><span class="n">optionName</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;convert&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Convert time to another unit&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onSlashConvert</span><span class="p">(</span>
+<span class="w">            </span><span class="n">GuildSlashEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The time to convert&quot;</span><span class="p">)</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">time</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert from&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="n">from</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert to&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="n">to</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">to</span><span class="p">.</span><span class="na">convert</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">to</span><span class="p">.</span><span class="na">name</span><span class="p">().</span><span class="na">toLowerCase</span><span class="p">()).</span><span class="na">queue</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>As you can see, the choice lists, despite being simple, are quite lengthy and duplicated,
+this issue is solved with <a href="#using-predefined-choices">predefined choices</a>.</p>
+<h3 id="generated-values">Generated values<a class="headerlink" href="#generated-values" title="Permanent link">&para;</a></h3>
+<p>Generated values are a command parameter which gets their values computed by a lambda everytime a command is run, 
+given by <code>ApplicationCommand#getGeneratedValueSupplier</code>, which you must override, 
+similarly to adding choices.</p>
+<p>As always, make sure to check against the command path as well as the option's display name.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Kotlin</label><label for="__tabbed_5_2">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashCreateTimeKotlin</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getGeneratedValueSupplier</span><span class="p">(</span>
+<span class="w">        </span><span class="n">guild</span><span class="p">:</span><span class="w"> </span><span class="n">Guild?,</span>
+<span class="w">        </span><span class="n">commandId</span><span class="p">:</span><span class="w"> </span><span class="kt">String?</span><span class="p">,</span>
+<span class="w">        </span><span class="n">commandPath</span><span class="p">:</span><span class="w"> </span><span class="n">CommandPath</span><span class="p">,</span>
+<span class="w">        </span><span class="n">optionName</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">        </span><span class="n">parameterType</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterType</span>
+<span class="w">    </span><span class="p">):</span><span class="w"> </span><span class="n">ApplicationGeneratedValueSupplier</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">commandPath</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;create_time&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">optionName</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;timestamp&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Create a snapshot of the instant the command was created</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">()</span>
+<span class="w">                </span><span class="c1">// Give back the instant snapshot, as this will be called every time the command is run</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">ApplicationGeneratedValueSupplier</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">super</span><span class="p">.</span><span class="na">getGeneratedValueSupplier</span><span class="p">(</span><span class="n">guild</span><span class="p">,</span><span class="w"> </span><span class="n">commandId</span><span class="p">,</span><span class="w"> </span><span class="n">commandPath</span><span class="p">,</span><span class="w"> </span><span class="n">optionName</span><span class="p">,</span><span class="w"> </span><span class="n">parameterType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;create_time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Shows the creation time of this command&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashCreateTime</span><span class="p">(</span>
+<span class="w">        </span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@GeneratedOption</span><span class="w"> </span><span class="n">timestamp</span><span class="p">:</span><span class="w"> </span><span class="n">Instant</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;I was created on </span><span class="si">${</span><span class="n">TimeFormat</span><span class="p">.</span><span class="na">DATE_TIME_SHORT</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SlashCreateTimeJava</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@NotNull</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ApplicationGeneratedValueSupplier</span><span class="w"> </span><span class="nf">getGeneratedValueSupplier</span><span class="p">(</span>
+<span class="w">            </span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">Guild</span><span class="w"> </span><span class="n">guild</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">commandId</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">CommandPath</span><span class="w"> </span><span class="n">commandPath</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">optionName</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">ParameterType</span><span class="w"> </span><span class="n">parameterType</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">commandPath</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;create_time&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">optionName</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;timestamp&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Create a snapshot of the instant the command was created</span>
+<span class="w">                </span><span class="kd">final</span><span class="w"> </span><span class="n">Instant</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">();</span>
+<span class="w">                </span><span class="c1">// Give back the instant snapshot, as this will be called every time the command is ran</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">now</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">getGeneratedValueSupplier</span><span class="p">(</span><span class="n">guild</span><span class="p">,</span><span class="w"> </span><span class="n">commandId</span><span class="p">,</span><span class="w"> </span><span class="n">commandPath</span><span class="p">,</span><span class="w"> </span><span class="n">optionName</span><span class="p">,</span><span class="w"> </span><span class="n">parameterType</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;create_time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Shows the creation time of this command&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onSlashTimeIn</span><span class="p">(</span>
+<span class="w">            </span><span class="n">GuildSlashEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@GeneratedOption</span><span class="w"> </span><span class="n">Instant</span><span class="w"> </span><span class="n">timestamp</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;I was created on &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">TimeFormat</span><span class="p">.</span><span class="na">DATE_TIME_SHORT</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)).</span><span class="na">queue</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</div>
 <h2 id="dsl-commands-kotlin">DSL commands (Kotlin)<a class="headerlink" href="#dsl-commands-kotlin" title="Permanent link">&para;</a></h2>
 <p>DSL commands were added in V3 to help create commands dynamically, 
 whether it's to let the user filter commands themselves, or adding subcommands/options in a loop; 
 you can almost do anything you want while keeping the simplicity of your command method.</p>
-<p>Application commands can be added with a public, non-static method annotated with <code class="highlight"><span class="nd">@AppDeclaration</span></code>,
+<p>Application commands can be added with a public method annotated with <code class="highlight"><span class="nd">@AppDeclaration</span></code>,
 where the first parameter is a <code>GlobalApplicationCommandManager</code> (for global / guild-only global) commands, 
 or <code>GuildApplicationCommandManager</code> for guild commands.</p>
 <p>You can then simply use the <code>slashCommand</code> method, give it the command name, the command method, 
 and then configure your command.</p>
-<p>Example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Kotlin (DSL)</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You are allowed to not add any command at all, for example, 
+if the <code>guild</code> in <code>GuildApplicationCommandManager</code> isn't a guild you want the command to appear in.</p>
 </div>
-</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
 <span class="kd">class</span><span class="w"> </span><span class="nc">SlashPingKotlinDsl</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashPing</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -753,14 +1023,349 @@ and then configure your command.</p>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+</div>
 <h3 id="adding-options_1">Adding options<a class="headerlink" href="#adding-options_1" title="Permanent link">&para;</a></h3>
+<p>Options can simply be added with a parameter and declaring it using <code>option</code> in your command builder,
+where the <code>declaredName</code> is the name of your parameter, the block will let you change the description, choices, etc.</p>
+<p>All supported types are documented under <code>ParameterResolver</code>, and <a href="#adding-option-resolvers">other types can be added</a>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashSayKotlinDsl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashSay</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">content</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@AppDeclaration</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">declare</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span><span class="w"> </span><span class="n">GlobalApplicationCommandManager</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">slashCommand</span><span class="p">(</span><span class="s">&quot;say&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">onSlashSay</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Says something&quot;</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;content&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;What to say&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can override the option name by setting <code>optionName</code> in the option declaration:
+<div class="highlight"><pre><span></span><code><span class="n">option</span><span class="p">(</span><span class="s">&quot;content&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">optionName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sentence&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</div>
+<h4 id="using-choices_1">Using choices<a class="headerlink" href="#using-choices_1" title="Permanent link">&para;</a></h4>
+<p>Adding choices is very straight forward, you just have to give a list of choices to the <code>choice</code> property.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashConvertKotlinDsl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashConvert</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="p">:</span><span class="w"> </span><span class="kt">Long</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">convert</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">)</span><span class="si">}</span><span class="s"> </span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">name</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@AppDeclaration</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">declare</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span><span class="w"> </span><span class="n">GlobalApplicationCommandManager</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">slashCommand</span><span class="p">(</span><span class="s">&quot;convert&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">onSlashConvert</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Convert time to another unit&quot;</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The time to convert&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;from&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert from&quot;</span>
+
+<span class="w">                </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="w">                    </span><span class="c1">// The Resolvers class helps us by providing resolvers for any enum type.</span>
+<span class="w">                    </span><span class="c1">// We&#39;re just using the helper method to change an enum value to a more natural name.</span>
+<span class="w">                    </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Choice</span><span class="p">(</span><span class="n">Resolvers</span><span class="p">.</span><span class="na">toHumanName</span><span class="p">(</span><span class="nb">it</span><span class="p">),</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">name</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;to&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert to&quot;</span>
+
+<span class="w">                </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="w">                    </span><span class="c1">// The Resolvers class helps us by providing resolvers for any enum type.</span>
+<span class="w">                    </span><span class="c1">// We&#39;re just using the helper method to change an enum value to a more natural name.</span>
+<span class="w">                    </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Choice</span><span class="p">(</span><span class="n">Resolvers</span><span class="p">.</span><span class="na">toHumanName</span><span class="p">(</span><span class="nb">it</span><span class="p">),</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">name</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<p>As you can see, the choice lists, despite being simple, are quite lengthy and duplicated, 
+this issue is solved with <a href="#using-predefined-choices">predefined choices</a>.</p>
+<h3 id="generated-values_1">Generated values<a class="headerlink" href="#generated-values_1" title="Permanent link">&para;</a></h3>
+<p>Generated values are a command parameter that gets their values computed by the given block everytime the command run.</p>
+<p>Contrary to the annotated commands, no checks are required, as this is tied to the currently built command.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashCreateTimeKotlinDsl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashCreateTime</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">timestamp</span><span class="p">:</span><span class="w"> </span><span class="n">Instant</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;I was created on </span><span class="si">${</span><span class="n">TimeFormat</span><span class="p">.</span><span class="na">DATE_TIME_SHORT</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@AppDeclaration</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">declare</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span><span class="w"> </span><span class="n">GlobalApplicationCommandManager</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">slashCommand</span><span class="p">(</span><span class="s">&quot;create_time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">onSlashCreateTime</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Shows the creation time of this command&quot;</span>
+
+<span class="w">            </span><span class="c1">// Create a snapshot of the instant the command was created</span>
+<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">()</span>
+<span class="w">            </span><span class="n">generatedOption</span><span class="p">(</span><span class="s">&quot;timestamp&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Give back the instant snapshot, as this will be called every time the command is run</span>
+<span class="w">                </span><span class="k">return</span><span class="nd">@generatedOption</span><span class="w"> </span><span class="n">now</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
 <h2 id="default-description">Default description<a class="headerlink" href="#default-description" title="Permanent link">&para;</a></h2>
+<p>You can avoid setting the (non-localized) descriptions of your commands and options 
+by putting them in a localization file, using the root locale (i.e., no locale suffix),
+and have your localization bundle registered with <code>BApplicationConfigBuilder#addLocalizations</code>.</p>
+<details class="info">
+<summary>The same commands as before, but without the descriptions</summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashSayDefaultDescriptionKotlinDsl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashSayDefaultDescription</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">content</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@AppDeclaration</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">declare</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span><span class="w"> </span><span class="n">GlobalApplicationCommandManager</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">slashCommand</span><span class="p">(</span><span class="s">&quot;say_default_description&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">onSlashSayDefaultDescription</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;content&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Adding the root localization bundle</p>
+<p>For the given resource bundle:
+<div class="highlight"><span class="filename">src/main/resources/bc_localization/Commands.json</span><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;say_default_description&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Says something&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;content.description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What to say&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>You can add the bundle by simply calling <code>BApplicationConfigBuilder#addLocalizations("Commands")</code>.</p>
+</div>
+<h2 id="using-predefined-choices">Using predefined choices<a class="headerlink" href="#using-predefined-choices" title="Permanent link">&para;</a></h2>
+<p>If your choices stay the same for every command,
+you can improve re-usability and avoid extra code by using choices on the resolver's level,
+that is, the resolver will return the choices used for every option of their type.</p>
+<p>All you now need to do is enable <code>usePredefinedChoices</code> on your option.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>Here, the resolver for <code>TimeUnit</code> is already defined and will be explained in <a href="#adding-option-resolvers">Adding option resolvers</a>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Kotlin</label><label for="__tabbed_6_2">Kotlin (DSL)</label><label for="__tabbed_6_3">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashConvertSimplifiedKotlin</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;convert_simplified&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Convert time to another unit&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashConvertSimplified</span><span class="p">(</span>
+<span class="w">        </span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The time to convert&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">time</span><span class="p">:</span><span class="w"> </span><span class="kt">Long</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert from&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">usePredefinedChoices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert to&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">usePredefinedChoices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">convert</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">)</span><span class="si">}</span><span class="s"> </span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">name</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">SlashConvertSimplifiedKotlinDsl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onSlashConvertSimplified</span><span class="p">(</span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">GuildSlashEvent</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="p">:</span><span class="w"> </span><span class="kt">Long</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">convert</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">)</span><span class="si">}</span><span class="s"> </span><span class="si">${</span><span class="n">to</span><span class="p">.</span><span class="na">name</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="na">queue</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@AppDeclaration</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">declare</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span><span class="w"> </span><span class="n">GlobalApplicationCommandManager</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">slashCommand</span><span class="p">(</span><span class="s">&quot;convert_simplified&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">onSlashConvertSimplified</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Convert time to another unit&quot;</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The time to convert&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;from&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert from&quot;</span>
+
+<span class="w">                </span><span class="n">usePredefinedChoices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">option</span><span class="p">(</span><span class="s">&quot;to&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert to&quot;</span>
+
+<span class="w">                </span><span class="n">usePredefinedChoices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Command</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SlashConvertSimplifiedJava</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ApplicationCommand</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@JDASlashCommand</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;convert_simplified&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Convert time to another unit&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onSlashTimeInSimplified</span><span class="p">(</span>
+<span class="w">            </span><span class="n">GuildSlashEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The time to convert&quot;</span><span class="p">)</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">time</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert from&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">usePredefinedChoices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="n">from</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@SlashOption</span><span class="p">(</span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The unit to convert to&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">usePredefinedChoices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="n">to</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">event</span><span class="p">.</span><span class="na">reply</span><span class="p">(</span><span class="n">to</span><span class="p">.</span><span class="na">convert</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">to</span><span class="p">.</span><span class="na">toString</span><span class="p">().</span><span class="na">toLowerCase</span><span class="p">()).</span><span class="na">queue</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</div>
 <h2 id="adding-option-resolvers">Adding option resolvers<a class="headerlink" href="#adding-option-resolvers" title="Permanent link">&para;</a></h2>
-<h2 id="predefined-choices">Predefined choices<a class="headerlink" href="#predefined-choices" title="Permanent link">&para;</a></h2>
+<p>Option resolvers help you support other types for your command options, such as <code>TimeUnit</code>, or any object of your own.</p>
+<p>Slash command option resolvers specify which option type will be used on Discord, 
+and will handle the conversion from the Discord value to the corresponding object.</p>
+<p>The class implementing the resolver, or the function returning a resolver, must be annotated with <code class="highlight"><span class="nd">@Resolver</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="highlight"><span class="nd">@Resolver</span></code> is one of the annotations that are considered as a service annotation.
+This means that it behaves exactly the same as if you had used <code>@BService</code>, 
+except here the annotation is more meaningful.</p>
+</div>
+<h3 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h3>
+<p>For that, you need a class annotated with <code class="highlight"><span class="nd">@Resolver</span></code> extending <code>ParameterResolver</code>, 
+and implementing <code>SlashParameterResolver</code>.</p>
+<p>The first type parameter is the type of your resolver implementation, and the second type is what the resolver returns.</p>
+<div class="admonition example">
+<p class="admonition-title">A <code>TimeUnit</code> resolver</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Kotlin</label><label for="__tabbed_7_2">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Resolver</span>
+<span class="kd">object</span><span class="w"> </span><span class="nc">TimeUnitResolver</span><span class="w"> </span><span class="p">:</span>
+<span class="w">    </span><span class="n">ParameterResolver</span><span class="o">&lt;</span><span class="n">TimeUnitResolver</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">class</span><span class="p">),</span>
+<span class="w">    </span><span class="n">SlashParameterResolver</span><span class="o">&lt;</span><span class="n">TimeUnitResolver</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">optionType</span><span class="p">:</span><span class="w"> </span><span class="n">OptionType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OptionType</span><span class="p">.</span><span class="na">STRING</span>
+
+<span class="w">    </span><span class="c1">// This is all you need to implement in order to support predefined choices</span>
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getPredefinedChoices</span><span class="p">(</span><span class="n">guild</span><span class="p">:</span><span class="w"> </span><span class="n">Guild?)</span><span class="p">:</span><span class="w"> </span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Choice</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="w">            </span><span class="c1">// The Resolvers class helps us by providing resolvers for any enum type.</span>
+<span class="w">            </span><span class="c1">// We&#39;re just using the helper method to change an enum value to a more natural name.</span>
+<span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Choice</span><span class="p">(</span><span class="n">Resolvers</span><span class="p">.</span><span class="na">toHumanName</span><span class="p">(</span><span class="nb">it</span><span class="p">),</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">name</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">resolveSuspend</span><span class="p">(</span>
+<span class="w">        </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">BContext</span><span class="p">,</span>
+<span class="w">        </span><span class="n">info</span><span class="p">:</span><span class="w"> </span><span class="n">SlashCommandInfo</span><span class="p">,</span>
+<span class="w">        </span><span class="n">event</span><span class="p">:</span><span class="w"> </span><span class="n">CommandInteractionPayload</span><span class="p">,</span>
+<span class="w">        </span><span class="n">optionMapping</span><span class="p">:</span><span class="w"> </span><span class="n">OptionMapping</span>
+<span class="w">    </span><span class="p">):</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enumValueOf</span><span class="o">&lt;</span><span class="n">TimeUnit</span><span class="o">&gt;</span><span class="p">(</span><span class="n">optionMapping</span><span class="p">.</span><span class="na">asString</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nd">@Resolver</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TimeUnitResolverJava</span>
+<span class="w">        </span><span class="kd">extends</span><span class="w"> </span><span class="n">ParameterResolver</span><span class="o">&lt;</span><span class="n">TimeUnitResolverJava</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="kd">implements</span><span class="w"> </span><span class="n">SlashParameterResolver</span><span class="o">&lt;</span><span class="n">TimeUnitResolverJava</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TimeUnitResolverJava</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@NotNull</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">OptionType</span><span class="w"> </span><span class="nf">getOptionType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">OptionType</span><span class="p">.</span><span class="na">STRING</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@NotNull</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Command</span><span class="p">.</span><span class="na">Choice</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getPredefinedChoices</span><span class="p">(</span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">Guild</span><span class="w"> </span><span class="n">guild</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="w">                </span><span class="c1">// The Resolvers class helps us by providing resolvers for any enum type.</span>
+<span class="w">                </span><span class="c1">// We&#39;re just using the helper method to change an enum value to a more natural name.</span>
+<span class="w">                </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Command</span><span class="p">.</span><span class="na">Choice</span><span class="p">(</span><span class="n">Resolvers</span><span class="p">.</span><span class="na">toHumanName</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="na">name</span><span class="p">()))</span>
+<span class="w">                </span><span class="p">.</span><span class="na">toList</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Nullable</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">BContext</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">SlashCommandInfo</span><span class="w"> </span><span class="n">info</span><span class="p">,</span><span class="w"> </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">CommandInteractionPayload</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="nd">@NotNull</span><span class="w"> </span><span class="n">OptionMapping</span><span class="w"> </span><span class="n">optionMapping</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">optionMapping</span><span class="p">.</span><span class="na">getAsString</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, this defines the slash command's option to be a string, 
+and provides predefined choices, letting you easily use them in your commands.</p>
+</div>
+<h3 id="built-in-resolver-generators">Built-in resolver generators<a class="headerlink" href="#built-in-resolver-generators" title="Permanent link">&para;</a></h3>
+<p>The framework also provides functions in <code>Resolvers</code> to do most of the work for some types,
+all you need to do is declare a service factory with <code class="highlight"><span class="nd">@Resolver</span></code> and use the provided methods.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently there is only a factory for enum resolvers, but others might be added in the future.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">How to easily make a resolver for an enum type</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Kotlin</label><label for="__tabbed_8_2">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><span class="kd">object</span><span class="w"> </span><span class="nc">TimeUnitResolverSimplified</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// The displayed name should be lowercase with the first letter uppercase, see Resolvers#toHumanName</span>
+<span class="w">    </span><span class="nd">@Resolver</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getTimeUnitResolverSimplified</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enumResolver</span><span class="o">&lt;</span><span class="n">TimeUnit</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+As this functions as a service factory, the method needs to be in an <code>object</code> or have a no-arg constructor.</p>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TimeUnitResolverSimplifiedJava</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Resolver</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">ParameterResolver</span><span class="o">&lt;?</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getTimeUnitResolverSimplifiedJava</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// The displayed name should be lowercase with the first letter uppercase, see Resolvers#toHumanName</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Resolvers</span><span class="p">.</span><span class="na">enumResolver</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">[]</span><span class="p">{</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+As this functions as a service factory, the method needs to be static.</p>
+</div>
+</div>
+</div>
+</div>
 <h2 id="advanced-usage">Advanced usage<a class="headerlink" href="#advanced-usage" title="Permanent link">&para;</a></h2>
 <h3 id="composite-options">Composite options<a class="headerlink" href="#composite-options" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Distinction between parameters and options</p>
+<p>Method parameters are what you expect, simply a value in your method,
+but for the framework, parameters might be a complex object (composed of multiple options),
+or simply a single option, whether it's an injected service, a Discord option or a generated value.</p>
+<p>i.e., A parameter might be a single or multiple options, but an option is always a single value.</p>
+</div>
 <h3 id="kotlins-inline-classes">Kotlin's inline classes<a class="headerlink" href="#kotlins-inline-classes" title="Permanent link">&para;</a></h3>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>You can take a look at more examples <a href="https://github.com/freya022/BotCommands/tree/3.X/examples#examples">here</a>.</p>
 
 
 
@@ -837,10 +1442,11 @@ and then configure your command.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+    
     <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tabs", "toc.integrate", "content.code.annotate", "content.code.copy", "content.action.edit", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.726fbb30.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
       
     
   </body>
